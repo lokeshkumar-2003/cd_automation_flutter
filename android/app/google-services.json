@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1042133602783",
+    "project_id": "cdautomation-v1",
+    "storage_bucket": "cdautomation-v1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042133602783:android:5d84548c5863fcacc5f46a",
+        "android_client_info": {
+          "package_name": "com.example.cd_automation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo8uY9F81Da6vpBx-XDol2r6yw25DRpEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042133602783:android:861965458f99feb6c5f46a",
+        "android_client_info": {
+          "package_name": "com.example.quizapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo8uY9F81Da6vpBx-XDol2r6yw25DRpEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
