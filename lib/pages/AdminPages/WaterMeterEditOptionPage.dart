@@ -112,7 +112,6 @@ class _WaterMeterEditOptionState extends State<WaterMeterEditOption> {
       );
 
       if (response.statusCode == 200) {
-        // Step 3: Save file to storage using FileStorage class
         await FileStorage.writeBinaryFile(response.bodyBytes, '$meterName.png');
 
         ScaffoldMessenger.of(context).showSnackBar(

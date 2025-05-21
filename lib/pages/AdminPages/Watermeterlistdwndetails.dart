@@ -8,6 +8,7 @@ import 'package:cd_automation/util/Filestorage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 
 class Watermeterlistdwndetails extends StatefulWidget {
   final String meter;
@@ -42,9 +43,35 @@ class _WatermeterlistdwndetailsState extends State<Watermeterlistdwndetails> {
     return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 
-  Future<void> downloadReport(BuildContext context, String fromDate,
-      String toDate, String meterName) async {
+  Future<void> downloadReport(
+    BuildContext context,
+    String fromDate,
+    String toDate,
+    String meterName,
+  ) async {
+    var status = await Permission.manageExternalStorage.request();
+    if (!status.isGranted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Storage permission is required to save the report.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      openAppSettings();
+      return;
+    }
+
     try {
+      // 2. Format filename with readable dates
+      final from = DateFormat('yyyy-MM-dd').parse(fromDate);
+      final to = DateFormat('yyyy-MM-dd').parse(toDate);
+
+      final readableFrom = DateFormat('MMM dd').format(from); // May 21
+      final readableTo = DateFormat('MMM dd').format(to); // Apr 12
+
+      final fileName = '$meterName Report $readableFrom - $readableTo.pdf';
+
+      // 3. Call API to get the report
       final response = await http.post(
         Uri.parse('${Apivariables.download_reports}/$meterName'),
         headers: {'Content-Type': 'application/json'},
@@ -55,12 +82,15 @@ class _WatermeterlistdwndetailsState extends State<Watermeterlistdwndetails> {
       );
 
       if (response.statusCode == 200) {
-        await FileStorage.writeBinaryFile(
-            response.bodyBytes, '$meterName-report.pdf');
+        // 4. Save file
+        final file = await FileStorage.writeBinaryFile(
+          response.bodyBytes,
+          fileName,
+        );
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Report saved to Downloads as $meterName-report.pdf'),
+            content: Text('Report saved as ${file.path.split('/').last}'),
             backgroundColor: Colors.green,
           ),
         );

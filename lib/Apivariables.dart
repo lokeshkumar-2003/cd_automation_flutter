@@ -1,7 +1,7 @@
 class Apivariables {
-  static const String baseUrl = 'http://192.168.177.171:5000';
-  static const String baseurlFastApi = 'http://192.168.177.171:8002';
-  static const String baseUrl1 = 'http://192.168.177.171:8002';
+  static const String baseUrl = 'http://192.168.173.171:5000';
+  static const String baseurlFastApi = 'http://192.168.173.171:8002';
+  static const String baseUrl1 = 'http://192.168.173.171:8002';
 
   static const String login_url = '$baseUrl/v1/api/auth/login';
 

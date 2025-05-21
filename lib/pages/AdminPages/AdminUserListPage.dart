@@ -78,7 +78,9 @@ class _AdminUserListPageState extends State<AdminUserListPage> {
                       const Text(
                         'Admin List',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -96,6 +98,12 @@ class _AdminUserListPageState extends State<AdminUserListPage> {
                   ),
                   const SizedBox(height: 50),
                   ...adminUsers.map((user) {
+                    String userName = user['Name'] ?? 'Unnamed';
+                    String userId = user['userId'] ?? '';
+                    bool isActive = user['IsDeviceActive'] == true;
+                    String status = isActive ? "Active" : "Inactive";
+                    Color statusColor = isActive ? Colors.green : Colors.red;
+
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: SizedBox(
@@ -106,8 +114,8 @@ class _AdminUserListPageState extends State<AdminUserListPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (_) => AdminDetailPage(
-                                  userName: user['Name'] ?? 'Unnamed',
-                                  userId: user['userId'],
+                                  userName: userName,
+                                  userId: userId,
                                   userType: "admin_users",
                                 ),
                               ),
@@ -128,12 +136,35 @@ class _AdminUserListPageState extends State<AdminUserListPage> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              user['Name'] ?? 'Unnamed',
-                              style: const TextStyle(color: Color(0xFF00536E)),
-                            ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  userName,
+                                  style: const TextStyle(
+                                    color: Color(0xFF00536E),
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 12,
+                                height: 12,
+                                decoration: BoxDecoration(
+                                  color: statusColor,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                status,
+                                style: TextStyle(
+                                  color: statusColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

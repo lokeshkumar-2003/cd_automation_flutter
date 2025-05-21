@@ -93,6 +93,14 @@ class _RegularUserListPageState extends State<RegularUserListPage> {
               Expanded(
                 child: ListView(
                   children: regularUsers.map((user) {
+                    String status = (user['IsDeviceActive'] == true)
+                        ? "Active"
+                        : "Inactive";
+
+                    Color statusColor = status.toLowerCase() == "active"
+                        ? Colors.green
+                        : Colors.red;
+
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: SizedBox(
@@ -123,12 +131,33 @@ class _RegularUserListPageState extends State<RegularUserListPage> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              user['Name'] ?? "Unnamed",
-                              style: const TextStyle(color: Color(0xFF00536E)),
-                            ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  user['Name'] ?? "Unnamed",
+                                  style:
+                                      const TextStyle(color: Color(0xFF00536E)),
+                                ),
+                              ),
+                              Container(
+                                width: 12,
+                                height: 12,
+                                decoration: BoxDecoration(
+                                  color: statusColor,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                status,
+                                style: TextStyle(
+                                  color: statusColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
